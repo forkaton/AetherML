@@ -46,4 +46,4 @@ Below are captures demonstrating the Linear Regression module in action during t
 ![Running State](capture/running.png)
 
 **Gradient Descent (Paused)**
-![Paused State](capture/pause.png)
+![Paused State](capture/paused.png)
