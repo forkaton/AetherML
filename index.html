@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherML Visualizer | Lab Riset Machine Learning Interaktif</title>
+    <meta name="description" content="AetherML Visualizer — Pelajari Machine Learning secara mendalam melalui visualisasi interaktif: KNN, Linear Regression, K-Means, Decision Tree, dan Neural Network.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- ===== SIDEBAR ===== -->
+        <aside id="sidebar">
+            <div class="logo">
+                <h1>Aether<span>ML</span></h1>
+                <p>Interactive Research Lab</p>
+            </div>
+            <nav id="module-nav">
+                <button class="nav-btn active" data-target="module-regression">
+                    <span class="nav-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="20" x2="21" y2="4"/><polyline points="15 4 21 4 21 10"/></svg>
+                    </span>
+                    <div class="nav-label">Linear Regression<small>Gradient Descent</small></div>
+                </button>
+                <button class="nav-btn" data-target="module-knn">
+                    <span class="nav-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="10" cy="16" r="2.5"/><circle cx="18" cy="18" r="2.5"/><line x1="10" y1="16" x2="6" y2="6" stroke-dasharray="2 2" opacity="0.5"/><line x1="10" y1="16" x2="18" y2="8" stroke-dasharray="2 2" opacity="0.5"/></svg>
+                    </span>
+                    <div class="nav-label">K-Nearest Neighbors<small>Decision Boundary</small></div>
+                </button>
+                <button class="nav-btn" data-target="module-kmeans">
+                    <span class="nav-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="4" opacity="0.4"/><circle cx="17" cy="9" r="4" opacity="0.4"/><circle cx="11" cy="17" r="4" opacity="0.4"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/><circle cx="17" cy="9" r="1.5" fill="currentColor"/><circle cx="11" cy="17" r="1.5" fill="currentColor"/></svg>
+                    </span>
+                    <div class="nav-label">K-Means Clustering<small>Convergence Analysis</small></div>
+                </button>
+                <button class="nav-btn" data-target="module-tree">
+                    <span class="nav-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2.5"/><circle cx="6" cy="13" r="2.5"/><circle cx="18" cy="13" r="2.5"/><circle cx="3" cy="21" r="1.5"/><circle cx="9" cy="21" r="1.5"/><line x1="12" y1="6.5" x2="6" y2="10.5"/><line x1="12" y1="6.5" x2="18" y2="10.5"/><line x1="6" y1="15.5" x2="3" y2="19.5"/><line x1="6" y1="15.5" x2="9" y2="19.5"/></svg>
+                    </span>
+                    <div class="nav-label">Decision Tree<small>Split Visualizer</small></div>
+                </button>
+                <button class="nav-btn" data-target="module-nn">
+                    <span class="nav-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="4" cy="8" r="2"/><circle cx="4" cy="16" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="20" cy="12" r="2"/><line x1="6" y1="8" x2="10" y2="5"/><line x1="6" y1="8" x2="10" y2="12"/><line x1="6" y1="8" x2="10" y2="19"/><line x1="6" y1="16" x2="10" y2="5"/><line x1="6" y1="16" x2="10" y2="12"/><line x1="6" y1="16" x2="10" y2="19"/><line x1="14" y1="5" x2="18" y2="12"/><line x1="14" y1="12" x2="18" y2="12"/><line x1="14" y1="19" x2="18" y2="12"/></svg>
+                    </span>
+                    <div class="nav-label">Neural Network<small>Backpropagation</small></div>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-badge">100% From Scratch &middot; No Libraries</div>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main id="main-content">
+
+            <!-- ========== MODULE: LINEAR REGRESSION ========== -->
+            <section id="module-regression" class="module-view active">
+                <header class="module-header">
+                    <h2>Linear Regression <span>Gradient Descent Observatory</span></h2>
+                    <p>Pahami bagaimana model menyesuaikan garis melalui Gradient Descent. Bandingkan Batch, SGD, dan Mini-batch.</p>
+                </header>
+                <div class="workspace">
+                    <div class="canvas-area">
+                        <div class="canvas-container glass-panel">
+                            <div class="canvas-toolbar">
+                                <button id="reg-clear">Clear</button>
+                                <span class="toolbar-divider"></span>
+                                <button id="reg-preset-linear">Linear Data</button>
+                                <button id="reg-preset-noise">Noisy Data</button>
+                            </div>
+                            <canvas id="reg-canvas"></canvas>
+                        </div>
+                        <div class="chart-container glass-panel">
+                            <canvas id="reg-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="controls-panel glass-panel">
+                        <h3>Controls</h3>
+                        <div class="control-group">
+                            <label for="reg-lr">Learning Rate (&alpha;) <span id="reg-lr-val">0.01</span></label>
+                            <input type="range" id="reg-lr" min="0.001" max="0.1" step="0.001" value="0.01">
+                        </div>
+                        <div class="control-group">
+                            <label for="reg-mode">GD Mode</label>
+                            <select id="reg-mode">
+                                <option value="batch">Batch Gradient Descent</option>
+                                <option value="sgd">Stochastic (SGD)</option>
+                                <option value="minibatch">Mini-batch</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Epoch <span id="reg-epoch">0</span></label>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="reg-step" class="primary-btn">Step &rarr;</button>
+                            <button id="reg-run" class="primary-btn accent-green">Run</button>
+                            <button id="reg-reset" class="secondary-btn">Reset Line</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== MODULE: KNN ========== -->
+            <section id="module-knn" class="module-view">
+                <header class="module-header">
+                    <h2>K-Nearest Neighbors <span>Decision Boundary Lab</span></h2>
+                    <p>Klik untuk menambahkan titik data, lalu lihat bagaimana KNN mengklasifikasikan seluruh ruang secara pixel-by-pixel.</p>
+                </header>
+                <div class="workspace">
+                    <div class="canvas-area">
+                        <div class="canvas-container glass-panel full-height">
+                            <div class="canvas-toolbar">
+                                <button id="knn-clear">Clear</button>
+                                <button id="knn-toggle-boundary">Toggle Boundary</button>
+                                <span class="toolbar-divider"></span>
+                                <button id="knn-preset-linear">Linear</button>
+                                <button id="knn-preset-moons">Moons</button>
+                                <button id="knn-preset-circles">Circles</button>
+                            </div>
+                            <canvas id="knn-canvas"></canvas>
+                        </div>
+                    </div>
+                    <div class="controls-panel glass-panel">
+                        <h3>Controls</h3>
+                        <div class="control-group">
+                            <label for="knn-k">K Neighbors <span id="knn-k-val">3</span></label>
+                            <input type="range" id="knn-k" min="1" max="15" step="1" value="3">
+                        </div>
+                        <div class="control-group">
+                            <label for="knn-metric">Distance Metric</label>
+                            <select id="knn-metric">
+                                <option value="euclidean">Euclidean</option>
+                                <option value="manhattan">Manhattan</option>
+                                <option value="minkowski">Minkowski (p=3)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="knn-class">Click Class</label>
+                            <select id="knn-class">
+                                <option value="0">Red &mdash; Class 0</option>
+                                <option value="1">Blue &mdash; Class 1</option>
+                                <option value="2">Green &mdash; Class 2</option>
+                            </select>
+                        </div>
+                        <div class="info-box">
+                            <p>Hover over the canvas to see live KNN classification in the math panel.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== MODULE: K-MEANS ========== -->
+            <section id="module-kmeans" class="module-view">
+                <header class="module-header">
+                    <h2>K-Means Clustering <span>Convergence Analyzer</span></h2>
+                    <p>Amati bagaimana centroid bergerak menuju pusat klaster, langkah demi langkah, sampai konvergen.</p>
+                </header>
+                <div class="workspace">
+                    <div class="canvas-area">
+                        <div class="canvas-container glass-panel">
+                            <div class="canvas-toolbar">
+                                <button id="kmeans-clear">Clear</button>
+                                <span class="toolbar-divider"></span>
+                                <button id="kmeans-preset-blobs">Blobs</button>
+                                <button id="kmeans-preset-moons">Moons</button>
+                                <button id="kmeans-preset-circles">Circles</button>
+                            </div>
+                            <canvas id="kmeans-canvas"></canvas>
+                        </div>
+                        <div class="chart-container glass-panel">
+                            <canvas id="kmeans-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="controls-panel glass-panel">
+                        <h3>Controls</h3>
+                        <div class="control-group">
+                            <label for="kmeans-k">Clusters (K) <span id="kmeans-k-val">3</span></label>
+                            <input type="range" id="kmeans-k" min="2" max="8" step="1" value="3">
+                        </div>
+                        <div class="control-group toggle-group">
+                            <label for="kmeans-kpp">
+                                <input type="checkbox" id="kmeans-kpp" checked>
+                                K-Means++ Initialization
+                            </label>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="kmeans-step" class="primary-btn">Step &rarr;</button>
+                            <button id="kmeans-run" class="primary-btn accent-green">Run</button>
+                            <button id="kmeans-reset" class="secondary-btn">Reset Centroids</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== MODULE: DECISION TREE ========== -->
+            <section id="module-tree" class="module-view">
+                <header class="module-header">
+                    <h2>Decision Tree <span>Split Visualizer</span></h2>
+                    <p>Lihat bagaimana tree mempartisi ruang data menggunakan split axis-aligned. Bandingkan Gini vs Entropy.</p>
+                </header>
+                <div class="workspace">
+                    <div class="canvas-area">
+                        <div class="canvas-container glass-panel">
+                            <div class="canvas-toolbar">
+                                <button id="tree-clear">Clear</button>
+                                <span class="toolbar-divider"></span>
+                                <button id="tree-preset-linear">Linear</button>
+                                <button id="tree-preset-moons">Moons</button>
+                                <button id="tree-preset-xor">XOR</button>
+                            </div>
+                            <canvas id="tree-data-canvas"></canvas>
+                        </div>
+                        <div class="chart-container glass-panel tree-diagram-container">
+                            <h4 class="chart-label">Tree Structure</h4>
+                            <canvas id="tree-struct-canvas"></canvas>
+                        </div>
+                    </div>
+                    <div class="controls-panel glass-panel">
+                        <h3>Controls</h3>
+                        <div class="control-group">
+                            <label for="tree-depth">Max Depth <span id="tree-depth-val">4</span></label>
+                            <input type="range" id="tree-depth" min="1" max="8" step="1" value="4">
+                        </div>
+                        <div class="control-group">
+                            <label for="tree-impurity">Impurity Measure</label>
+                            <select id="tree-impurity">
+                                <option value="gini">Gini Index</option>
+                                <option value="entropy">Entropy (Info Gain)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="tree-class">Click Class</label>
+                            <select id="tree-class">
+                                <option value="0">Red &mdash; Class 0</option>
+                                <option value="1">Blue &mdash; Class 1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== MODULE: NEURAL NETWORK ========== -->
+            <section id="module-nn" class="module-view">
+                <header class="module-header">
+                    <h2>Neural Network <span>Backpropagation Debugger</span></h2>
+                    <p>Bangun dan latih jaringan saraf dari nol. Lihat bobot, aktivasi, dan decision boundary secara real-time.</p>
+                </header>
+                <div class="workspace">
+                    <div class="canvas-area">
+                        <div class="canvas-container glass-panel">
+                            <div class="canvas-toolbar">
+                                <button id="nn-clear">Clear</button>
+                                <span class="toolbar-divider"></span>
+                                <button id="nn-preset-xor">XOR</button>
+                                <button id="nn-preset-circles">Circles</button>
+                                <button id="nn-preset-spirals">Spirals</button>
+                            </div>
+                            <canvas id="nn-data-canvas"></canvas>
+                        </div>
+                        <div class="nn-bottom-panels">
+                            <div class="chart-container glass-panel nn-net-panel">
+                                <h4 class="chart-label">Network Diagram</h4>
+                                <canvas id="nn-net-canvas"></canvas>
+                            </div>
+                            <div class="chart-container glass-panel nn-loss-panel">
+                                <canvas id="nn-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controls-panel glass-panel">
+                        <h3>Controls</h3>
+                        <div class="control-group">
+                            <label for="nn-lr">Learning Rate (&alpha;) <span id="nn-lr-val">0.50</span></label>
+                            <input type="range" id="nn-lr" min="0.01" max="2.0" step="0.01" value="0.5">
+                        </div>
+                        <div class="control-group">
+                            <label for="nn-arch">Architecture</label>
+                            <select id="nn-arch">
+                                <option value="2-4-1">2 &rarr; 4 &rarr; 1 (Simple)</option>
+                                <option value="2-4-4-1" selected>2 &rarr; 4 &rarr; 4 &rarr; 1 (Standard)</option>
+                                <option value="2-8-4-1">2 &rarr; 8 &rarr; 4 &rarr; 1 (Wide)</option>
+                                <option value="2-6-6-1">2 &rarr; 6 &rarr; 6 &rarr; 1 (Deep)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label for="nn-activation">Activation Function</label>
+                            <select id="nn-activation">
+                                <option value="sigmoid">Sigmoid</option>
+                                <option value="relu">ReLU</option>
+                                <option value="tanh">Tanh</option>
+                            </select>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="nn-step" class="primary-btn">Step (1 Epoch)</button>
+                            <button id="nn-run" class="primary-btn accent-green">Run</button>
+                            <button id="nn-reset" class="secondary-btn">Reset Weights</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ===== MATH PANEL ===== -->
+        <aside id="math-panel" class="glass-panel">
+            <div class="panel-header">
+                <h3>Real-time Math</h3>
+                <button id="toggle-math-panel" title="Close Panel">&times;</button>
+            </div>
+            <div class="panel-content">
+                <!-- Regression Math -->
+                <div id="reg-math-content" class="math-module-content active">
+                    <div class="math-block">
+                        <h4>Hypothesis Function</h4>
+                        <code class="math-eq">&ycirc; = mx + c</code>
+                        <div class="live-vars">
+                            <div class="var-row"><span>m (slope)</span><span id="val-m" class="val">0.0000</span></div>
+                            <div class="var-row"><span>c (intercept)</span><span id="val-c" class="val">0.0000</span></div>
+                        </div>
+                    </div>
+                    <div class="math-block">
+                        <h4>Cost Function (MSE)</h4>
+                        <code class="math-eq">J = 1/N &Sigma;(y&#7522; - &ycirc;&#7522;)&sup2;</code>
+                        <div class="live-vars">
+                            <div class="var-row highlight"><span>Loss</span><span id="val-loss" class="val">0.0000</span></div>
+                        </div>
+                    </div>
+                    <div class="math-block">
+                        <h4>Gradients</h4>
+                        <code class="math-eq">&part;J/&part;m = -2/N &Sigma; x&#7522;(y&#7522; - &ycirc;&#7522;)</code>
+                        <code class="math-eq">&part;J/&part;c = -2/N &Sigma; (y&#7522; - &ycirc;&#7522;)</code>
+                        <div class="live-vars">
+                            <div class="var-row"><span>&part;J/&part;m</span><span id="val-grad-m" class="val">0.0000</span></div>
+                            <div class="var-row"><span>&part;J/&part;c</span><span id="val-grad-c" class="val">0.0000</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="knn-math-content" class="math-module-content"></div>
+                <div id="kmeans-math-content" class="math-module-content"></div>
+                <div id="tree-math-content" class="math-module-content"></div>
+                <div id="nn-math-content" class="math-module-content"></div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="src/utils/math.js"></script>
+    <script src="src/utils/canvas.js"></script>
+    <script src="src/utils/datasets.js"></script>
+    <script src="src/ui/chart.js"></script>
+    <script src="src/algorithms/regression.js"></script>
+    <script src="src/algorithms/knn.js"></script>
+    <script src="src/algorithms/kmeans.js"></script>
+    <script src="src/algorithms/decision-tree.js"></script>
+    <script src="src/algorithms/neural-network.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
